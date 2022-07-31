@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 
             await page.goto(url);  
 
-            await page.waitForNavigation();
+            await page.waitForSelector("tr.row-quarto");
 
             const data = await page.evaluate(() => {
 
@@ -36,10 +36,10 @@ router.post('/', (req, res) => {
                 for (const item of items) {
 
                     list.push({
-                        name: item.querySelector('.quartoNome ').innerHTML,
-                        description: item.querySelector('.quartoDescricao p').innerHTML,
-                        price: item.querySelector('.valorFinal').textContent.replace(/ +(?= )/g,''),
-                        image: item.querySelector('.room--image').getAttribute('data-src')
+                        name: item.querySelector('span.quartoNome').innerHTML,
+                        description: item.querySelector('div.quartoDescricao > p').innerHTML,
+                        price: item.querySelector('span.valorFinal').textContent.replace(/ +(?= )/g,''),
+                        image: item.querySelector('img.room--image').getAttribute('data-src')
                     });
 
                 }
